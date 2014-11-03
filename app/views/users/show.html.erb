@@ -1,2 +1,29 @@
 <h1>Username: <%= current_user.username %></h1>
 <h2>All Goals</h2>
+<ul>
+<% @goals.each do |goal| %>
+  <% if goal.goal_type == "private" && current_user == @user %>
+    <li><%= link_to goal.name, goal_url(goal) %>
+        <% if goal.completed?%>
+          Complete
+        <% else %>
+          Incomplete
+        <% end %>
+    </li>
+  <% elsif goal.goal_type == "public" %>
+    <li><%= link_to goal.name, goal_url(goal) %>
+        <% if goal.completed?%>
+          Complete
+        <% else %>
+          Incomplete
+        <% end %>
+    </li>
+
+  <% end %>
+  
+  <% if current_user == @user && !goal.completed? %>
+    <%= link_to "Complete Goal!", goal_complete_url(goal) %>
+  <% end %>
+    
+<% end %>
+</ul>

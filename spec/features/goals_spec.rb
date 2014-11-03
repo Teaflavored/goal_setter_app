@@ -88,7 +88,7 @@ feature "editing a goal" do
     
     expect(page).not_to have_button("Edit Goal")
     expect(page).to have_content("New name")
-    expect(page).not_to have_content(old_name) #try to see if you don't need                                                   #local var
+    expect(page).not_to have_css("h1.goal_name", text: old_name) #try to see if you don't need                                                   #local var
   end
 end
 
@@ -134,6 +134,7 @@ end
 feature "goal completion" do
   given(:goal) { FactoryGirl.create(:goal) }
   given(:user) { goal.goal_setter }
+  given(:user2) { FactoryGirl.create(:user) }
   
   before do
     sign_in(user)
@@ -158,6 +159,16 @@ feature "goal completion" do
     click_link goal.name
     
     expect(page).to have_content(goal.content)
+    expect(page).to have_content("Incomplete")
+  end
+  
+  it "should not be able to be completed by other users" do
+    sign_in(user2)
+    visit goal_complete_url(goal)
+    click_button "Sign Out"
+    sign_in(user)
+    visit goal_url(goal)
+    
     expect(page).to have_content("Incomplete")
   end
 end
