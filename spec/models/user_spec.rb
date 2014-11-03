@@ -10,13 +10,8 @@
 #  updated_at      :datetime
 #
 
-FactoryGirl.define do
-  factory :user, aliases: [:goal_setter] do
-    username do
-      Faker::Internet.user_name
-    end
-    password do
-      Faker::Internet.password(8)
-    end
-  end
+require 'rails_helper'
+
+RSpec.describe User, :type => :model do
+  pending "add some examples to (or delete) #{__FILE__}"
 end

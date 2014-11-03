@@ -1,0 +1,9 @@
+<h1>New Goal</h1>
+<% action_url = goals_url %>
+<% action = "POST" %>
+<% submit_msg = "Create New Goal" %>
+
+<%= render "form", action_url: action_url,
+                   action: action,
+                   submit_msg: submit_msg,
+                   goal: @goal %>

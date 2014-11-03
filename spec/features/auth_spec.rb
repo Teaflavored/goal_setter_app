@@ -18,6 +18,8 @@ feature "the signup process" do
       click_button "Sign Up"
       
       expect(page).to have_content("Sign Up")
+      expect(page).to have_content("Username can't be blank")
+      expect(page).to have_content("Password is too short")
     end
     
     it "shows username on the homepage after signup" do

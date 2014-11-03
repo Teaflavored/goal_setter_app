@@ -1,0 +1,10 @@
+<h1>Goal Name: <%= @goal.name %></h1>
+<p>
+  <%= @goal.content%>
+</p>
+<p><%= @goal.goal_type.capitalize %> </p>
+<% if @goal.completed? %>
+  <%= "Complete" %>
+<% else %>
+  <%= "Incomplete" %>
+<% end %>

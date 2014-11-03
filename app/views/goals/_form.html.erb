@@ -1,0 +1,36 @@
+<form action="<%= action_url %>" method="POST">
+  <% if action == "PATCH"%>
+    <input type="hidden" name="_method" value="PATCH">
+  <% end %>
+  
+  <input type="hidden" name="authenticity_token"
+         value="<%= form_authenticity_token %>">
+  
+  <label for="goal_name">Name</label>
+  <input id="goal_name"
+         name="goal[name]"
+         type="text"
+         value="<%= goal.name %>">
+  <br>
+  
+  <label for="goal_content">Content</label>
+  <textarea id="goal_content"
+            name="goal[content]"><%= goal.content %></textarea>
+  <br>
+  
+  <input type="radio" name="goal[goal_type]" 
+         id="goal_type_public" value="public"
+         <%= "checked" if goal.goal_type == "public" %>>
+         
+  <label for="goal_type_public">Public</label>
+  <br>
+
+  <input type="radio" name="goal[goal_type]" 
+         id="goal_type_private" value="private"
+         <%= "checked" if goal.goal_type == "private" %>>
+  <label for="goal_type_private">Private</label>
+  <br>
+  
+  <input type="submit" value="<%= submit_msg %>">
+  
+</form>

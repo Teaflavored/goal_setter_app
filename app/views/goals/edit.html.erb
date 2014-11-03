@@ -1,0 +1,9 @@
+<h1>Edit Goal</h1>
+<% action_url = goal_url(@goal) %>
+<% action = "PATCH" %>
+<% submit_msg = "Edit Goal" %>
+
+<%= render "form", action_url: action_url,
+                   action: action,
+                   submit_msg: submit_msg,
+                   goal: @goal %>
