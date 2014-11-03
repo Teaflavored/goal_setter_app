@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :redirect_unless_logged_in, only: :show
+  before_action :redirect_if_logged_in, only: [:new, :create]
   
   def new
     @user = User.new
@@ -21,7 +22,6 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @goals = @user.goals
   end
-  
   
   private
   def user_params

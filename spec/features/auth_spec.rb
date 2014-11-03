@@ -23,7 +23,8 @@ feature "the signup process" do
     end
     
     it "shows username on the homepage after signup" do
-      visit new_user_url
+      visit root_url
+      click_link "Sign Up"
       fill_in "Username", with: "test_user"
       fill_in "Password", with: "password"
       click_button "Sign Up"
@@ -36,12 +37,30 @@ end
 
 feature "logging in" do 
   given(:user) { FactoryGirl.create(:user) }
-  it "shows username on the homepage after login" do
-    sign_in(user)
-    
+  before { sign_in(user) }
+  it "shows username on the homepage after login" do    
     expect(page).to have_content(user.username)
   end
-
+  
+  it "doesn't show sign up link on home page" do
+    visit root_url
+    
+    expect(page).not_to have_link("Sign Up")
+  end
+  
+  it "shouldn't be able to access signing up" do
+    visit new_user_url
+    
+    expect(page).to have_content("Home")
+    expect(page).not_to have_content("Sign Up")
+  end
+  
+  it "shouldn't be able to access signing in" do
+    visit new_session_url
+    
+    expect(page).to have_content("Home")
+    expect(page).not_to have_content("Sign In")
+  end
 end
 
 feature "logging out" do 
@@ -56,9 +75,8 @@ feature "logging out" do
     sign_in(user)
     click_button "Sign Out"
     
-    
     expect(page).not_to have_content(user.username)
     expect(page).to have_link("Sign In")
   end
-
 end
+

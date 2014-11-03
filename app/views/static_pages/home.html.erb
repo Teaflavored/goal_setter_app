@@ -1,1 +1,8 @@
 <h1>Home</h1>
+<% unless logged_in? %>
+  <%= link_to "Sign Up", new_user_url %>
+<% end %>
+
+<% if logged_in? %>
+  <%= link_to "Profile", user_url(current_user) %>
+<% end %>

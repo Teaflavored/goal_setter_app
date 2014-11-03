@@ -27,3 +27,6 @@
     
 <% end %>
 </ul>
+<% if current_user == @user %>
+  <%= link_to "Create New Goal", new_goal_url %>
+<% end %>
