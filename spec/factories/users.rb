@@ -11,7 +11,7 @@
 #
 
 FactoryGirl.define do
-  factory :user, aliases: [:goal_setter] do
+  factory :user, aliases: [:goal_setter, :author] do
     username do
       Faker::Internet.user_name
     end
