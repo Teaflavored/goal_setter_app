@@ -29,16 +29,6 @@ ActiveRecord::Schema.define(version: 20141104011223) do
   add_index "comments", ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree
   add_index "comments", ["commentable_type"], name: "index_comments_on_commentable_type", using: :btree
 
-  create_table "goal_comments", force: true do |t|
-    t.integer  "goal_id",    null: false
-    t.integer  "author_id",  null: false
-    t.text     "content",    null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "goal_comments", ["goal_id"], name: "index_goal_comments_on_goal_id", using: :btree
-
   create_table "goals", force: true do |t|
     t.string   "name",                           null: false
     t.text     "content",                        null: false
@@ -51,17 +41,6 @@ ActiveRecord::Schema.define(version: 20141104011223) do
   end
 
   add_index "goals", ["goal_setter_id"], name: "index_goals_on_goal_setter_id", using: :btree
-
-  create_table "user_comments", force: true do |t|
-    t.integer  "user_id",    null: false
-    t.integer  "author_id",  null: false
-    t.text     "content",    null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "user_comments", ["author_id"], name: "index_user_comments_on_author_id", using: :btree
-  add_index "user_comments", ["user_id"], name: "index_user_comments_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "username",        null: false
