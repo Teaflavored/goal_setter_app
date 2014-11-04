@@ -1,7 +1,18 @@
 FactoryGirl.define do
-  factory :comment do
+  factory :user_comment, class: Comment do
+    content { Faker::Hacker.say_something_smart }
+    sequence :commentable do
+      FactoryGirl.create(:user)
+    end
     author
-    
-    body { Faker::Hacker.say_something_smart }
   end
+  
+  factory :goal_comment, class: Comment do
+    content { Faker::Hacker.say_something_smart }
+    sequence :commentable do
+      FactoryGirl.create(:goal)
+    end
+    author
+  end
+
 end

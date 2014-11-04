@@ -9,7 +9,7 @@ feature "showing comments" do
   
   it "shows comments on user show page" do
     sign_in(author)
-    visit user_url(user_comment.recipient)
+    visit user_url(user_comment.commentable)
     
     expect(page).to have_css("h2", text: "All comments" )
     expect(page).to have_content(user_comment.content)
@@ -17,7 +17,7 @@ feature "showing comments" do
   
   it "shows comments on the goal show page" do
     sign_in(author2)
-    visit goal_url(goal_comment.goal)
+    visit goal_url(goal_comment.commentable)
     
     expect(page).to have_css("h2", text: "All comments")
     expect(page).to have_content(goal_comment.content)
@@ -62,7 +62,7 @@ feature "creating a comment" do
     fill_in "Content", with: ""
     click_button "Comment!"
     
-    expect(page).not_to have(content)
+    expect(page).not_to have_content(content)
     expect(page).to have_content("Content can't be blank")
   end
   
@@ -83,7 +83,7 @@ feature "creating a comment" do
     fill_in "Content", with: ""
     click_button "Comment!"
     
-    expect(page).not_to have(content)
+    expect(page).not_to have_content(content)
     expect(page).to have_content("Content can't be blank")
   end
   
@@ -94,6 +94,9 @@ feature "editing a comment" do
   given(:user_comment) { FactoryGirl.create(:user_comment) }
   given(:author) { user_comment.author }
   given(:user) { FactoryGirl.create(:user) }
+  given(:goal_comment) { FactoryGirl.create(:goal_comment) }
+  given(:author2) { goal_comment.author }
+  
   
   it "shouldn't be able to edit another user's comment" do
     sign_in(user)
@@ -102,15 +105,28 @@ feature "editing a comment" do
     expect(page).to have_content("Home")
   end
   
-  it "should be able to edit own comment" do
+  it "should be able to edit own comment for user" do
     sign_in(author)
     old_content = user_comment.content
-    visit user_url(user_comment.user)
+    visit user_url(user_comment.commentable)
     click_link("Edit Comment")
     fill_in "Content", with: "new content"
     click_button("Edit")
     
-    expect(page).to have_content(user_comment.user.username)
+    expect(page).to have_content(user_comment.commentable.username)
+    expect(page).to have_css("p", text: "new content")
+    expect(page).not_to have_css("p", text: old_content)
+  end
+  
+  it "should be able to edit own comment for goal" do
+    sign_in(author2)
+    old_content = goal_comment.content
+    visit goal_url(goal_comment.commentable)
+    click_link("Edit Comment")
+    fill_in "Content", with: "new content"
+    click_button("Edit")
+    
+    expect(page).to have_content(goal_comment.commentable.name)
     expect(page).to have_css("p", text: "new content")
     expect(page).not_to have_css("p", text: old_content)
   end

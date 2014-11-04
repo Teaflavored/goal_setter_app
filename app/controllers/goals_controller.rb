@@ -27,6 +27,7 @@ class GoalsController < ApplicationController
   
   def show
     @goal = Goal.find(params[:id])
+    @comments = @goal.comments
     render :show
   end
   
