@@ -29,5 +29,10 @@ class Goal < ActiveRecord::Base
     primary_key: :id
   )
   has_many :comments, as: :commentable
+  
+  def cheer!
+    self.cheer_count += 1
+    self.save!
+  end
     
 end

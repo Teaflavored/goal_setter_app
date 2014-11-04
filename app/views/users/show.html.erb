@@ -17,6 +17,10 @@
         <% else %>
           Incomplete
         <% end %>
+        <% if current_user != goal.goal_setter %>
+          <%= link_to "Cheer this goal!", goal_cheer_url(goal) %>
+        <% end %>
+        <%= goal.cheer_count %> cheers for this goal!
     </li>
 
   <% end %>

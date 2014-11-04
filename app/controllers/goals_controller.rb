@@ -47,8 +47,10 @@ class GoalsController < ApplicationController
     end
   end
   
-  def destroy
-    
+  def cheer
+    @goal = Goal.find(params[:goal_id])
+    @goal.cheer!
+    redirect_to user_url(@goal.goal_setter)
   end
   
   private
